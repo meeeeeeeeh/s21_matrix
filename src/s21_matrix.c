@@ -9,6 +9,12 @@ void fill_matrix(matrix_t *val);
 
 
 int main() {
+
+
+
+
+
+
     matrix_t res1, res2, res3;
     int n = 1;
     double otv;
