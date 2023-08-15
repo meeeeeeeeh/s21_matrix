@@ -335,7 +335,7 @@ START_TEST(s21_mult_test_2) {
 
   ck_assert_int_eq(s21_mult_matrix(&res1, &res2, &res3), 0);
 
-  double m[3][3] = {{20, 26}, {56, 80}};
+  double m[2][2] = {{20, 26}, {56, 80}};
   s21_create_matrix(2, 2, &orig);
 
   for (int i = 0; i < res1.rows; ++i) {

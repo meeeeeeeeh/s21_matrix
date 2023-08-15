@@ -1,6 +1,5 @@
 #include "s21_matrix.h"
 
-void print_matrix(matrix_t *val);
 void s21_fill_matrix(matrix_t *val, double step);
 
 int s21_incorrect_matrix(matrix_t *value) {
@@ -198,14 +197,16 @@ int s21_calc_complements(matrix_t *A, matrix_t *result) {
 
   if (!res) {
     s21_create_matrix(A->rows, A->columns, result);
-    if (result->rows == 1) result->matrix[0][0] = 1;
-
-    for (int i = 0; i < A->rows; ++i) {
-      for (int k = 0; k < A->columns; ++k) {
-        matrix_t temp_minor;
-        s21_minor(A, &temp_minor, i, k);
-        result->matrix[i][k] = pow(-1, i + k) * s21_find_det(&temp_minor);
-        s21_remove_matrix(&temp_minor);
+    if (result->rows == 1)
+      result->matrix[0][0] = 1;
+    else {
+      for (int i = 0; i < A->rows; ++i) {
+        for (int k = 0; k < A->columns; ++k) {
+          matrix_t temp_minor;
+          s21_minor(A, &temp_minor, i, k);
+          result->matrix[i][k] = pow(-1, i + k) * s21_find_det(&temp_minor);
+          s21_remove_matrix(&temp_minor);
+        }
       }
     }
   }
@@ -223,8 +224,8 @@ int s21_inverse_matrix(matrix_t *A, matrix_t *result) {
     if (fabs(det) < 1e-6 || det == 0) {
       res = 2;
     } else {
-      s21_create_matrix(A->rows, A->columns, result);
       if (A->rows == 1) {
+        s21_create_matrix(A->rows, A->columns, result);
         result->matrix[0][0] = 1 / A->matrix[0][0];
       } else {
         matrix_t compl, transposed;
